@@ -378,7 +378,7 @@ int isValidCUIT(char* stringRecibido)
         }
     }
 
-    int digitos[10]={2,3,4,5,6,7,2,3,4,5};
+ /*   int digitos[10]={2,3,4,5,6,7,2,3,4,5};
     int acumulado = 0;
     int verificador;
 
@@ -397,7 +397,7 @@ int isValidCUIT(char* stringRecibido)
     {
         retorno=0;
     }
-
+*/
     //if(stringRecibido[2]!='-' || stringRecibido[11]!='-' || stringRecibido[0]!='2' || stringRecibido[1]!='0' || stringRecibido[1]!='3' || stringRecibido[1]!='4' || stringRecibido[1]!='7')
     return retorno;
 }

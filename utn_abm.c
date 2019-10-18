@@ -329,16 +329,16 @@ int cliente_modificar(eCliente clienteVector[], int sizeArray)
         {
             do
             {       //copiar printf de alta
-                printf("\n Posicion: %d\n ID: %d\n -nombre de la empresa: %s\n -cuit: %s\n C-direccion: %s\n D-localidad: %s",
+                printf("\n Posicion: %d\n ID: %d\n -nombre de la empresa: %s\n -cuit: %s\n A-direccion: %s\n B-localidad: %s",
                        posicion, clienteVector[posicion].idCliente,clienteVector[posicion].nombreDeEmpresa,clienteVector[posicion].cuit,clienteVector[posicion].direccion,clienteVector[posicion].localidad);
-                utn_getChar("\nModificar: C  D  S(salir)","\nError",'A','Z',1,&opcion);
+                utn_getChar("\nModificar: A  B  S(salir)","\nError",'A','Z',1,&opcion);
                 switch(opcion)
                 {
 
-                    case 'C':
+                    case 'A':
                     	utn_getTexto("\n: ","\nError",1,TEXT_SIZE,1,clienteVector[posicion].direccion);
                         break;
-                    case 'D':
+                    case 'B':
                         utn_getTexto("\n: ","\nError",1,TEXT_SIZE,1,clienteVector[posicion].localidad);
                         break;
                     case 'S':
@@ -626,7 +626,7 @@ int ordenar_porEntero(ePedido pedidoVector[],int size)
 			estaOrdenado=1;
 			for(i=1;i<size;i++)
 			{
-				if(pedidoVector[i].cantidadDeKilos<pedidoVector[i-1].cantidadDeKilos)
+				if(pedidoVector[i].idCliente<pedidoVector[i-1].idCliente)
 				{
 					auxVector[i]=pedidoVector[i];
 					pedidoVector[i]=pedidoVector[i-1];
@@ -747,4 +747,144 @@ int busca_valorMaximo(ePedido pedidoVector[],int size,float* valorBuscadoMax)
 		(*valorBuscadoMax)=auxMax;
 	}
 	return retorno;
+}
+/**\brief busca cliente con mas pedidos
+ *
+ */
+int busca_cliente(ePedido pedidoVector[],int size,int* clienteId)
+{
+	int retorno=-1;
+	int i;
+	int ultimoIdCliente=0;
+	int contadorCliente=0;
+	int contadorMaxCantPedidos=0;
+	int idClienteMax=0;
+
+	if(pedidoVector != NULL && size>0 )
+	{
+		retorno=0;
+		ordenar_porEntero(pedidoVector,size);
+		for(i=0;i<size;i++)
+		{
+			if(pedidoVector[i].idCliente!=ultimoIdCliente && pedidoVector[i].isEmpty==0)
+			{
+				ultimoIdCliente=pedidoVector[i].idCliente;
+				contadorCliente=0;
+			}
+			contadorCliente++;
+			if(contadorCliente>contadorMaxCantPedidos)
+			{
+				contadorMaxCantPedidos=contadorCliente;
+				idClienteMax=ultimoIdCliente;
+			}
+		}
+		(*clienteId)=idClienteMax;
+		printf("el id de cliente es:%d",(*clienteId));
+	}
+	return retorno;
+}
+
+void listaClienteCon_masPedidos(ePedido pedidoVector[],int size,int* clienteId,eCliente clienteVector[],int sizeCliente,int* posicion)
+{
+	busca_cliente(pedidoVector,size,clienteId);
+	cliente_buscarId(clienteVector,sizeCliente, (*clienteId), posicion);
+	listarUnCliente(clienteVector,(*posicion));
+}
+
+int busca_clienteConMasPendientes(ePedido pedidoVector[],int size, int valorBuscado, int* idCliente)
+{
+	int retorno=-1;
+	int i;
+	int ultimoIdCliente=0;
+	int contadorCliente=0;
+	int contadorMaxCantPedidos=0;
+	int idClienteMax=0;
+
+	if(pedidoVector != NULL && size>0 )
+	{
+		retorno=0;
+		ordenar_porEntero(pedidoVector,size);
+		for(i=0;i<size;i++)
+		{
+			if(pedidoVector[i].idCliente!=ultimoIdCliente && pedidoVector[i].isEmpty==0 && pedidoVector[i].estado==valorBuscado)
+			{
+				ultimoIdCliente=pedidoVector[i].idCliente;
+				contadorCliente=0;
+			}
+			contadorCliente++;
+			if(contadorCliente>contadorMaxCantPedidos)
+			{
+				contadorMaxCantPedidos=contadorCliente;
+				idClienteMax=ultimoIdCliente;
+			}
+		}
+		(*idCliente)=idClienteMax;
+		printf("el id de cliente es:%d",(*idCliente));
+	}
+	return retorno;
+}
+void listaClienteCon_masPedidosPendientes(ePedido pedidoVector[],int size,int* idCliente,eCliente clienteVector[],int sizeCliente,int* posicion)
+{
+	busca_clienteConMasPendientes(pedidoVector,size,1,idCliente);
+	cliente_buscarId(clienteVector,sizeCliente, (*idCliente), posicion);
+	listarUnCliente(clienteVector,(*posicion));
+}
+
+void listaClienteCon_masPedidosCumplidos(ePedido pedidoVector[],int size,int* idCliente,eCliente clienteVector[],int sizeCliente,int* posicion)
+{
+	busca_clienteConMasPendientes(pedidoVector,size,2,idCliente);
+	cliente_buscarId(clienteVector,sizeCliente, (*idCliente), posicion);
+	listarUnCliente(clienteVector,(*posicion));
+}
+int busca_clienteConMasKilos(ePedido pedidoVector[],int size, int* idCliente, float* auxCantidad)
+{
+	int retorno=-1;
+	int i;
+	int ultimoIdCliente=0;
+	int contadorCliente=0;
+	int contadorMaxCantPedidos=0;
+	int idClienteMax=0;
+	//float auxAux=0;
+	 (*auxCantidad)=0;
+
+	ePedido auxVector[size];
+
+	if(pedidoVector != NULL && size>0 )
+	{
+		retorno=0;
+		ordenar_porEntero(pedidoVector,size);
+		for(i=0;i<size;i++)
+		{
+
+			auxVector[i].idCliente=pedidoVector[i].idCliente;
+			auxVector[i].cantidadDeKilos=0;
+			if(pedidoVector[i].idCliente==auxVector[i].idCliente && pedidoVector[i].isEmpty==0)
+			{
+				(*auxCantidad)=pedidoVector[i].cantidadDeKilos+(*auxCantidad);
+				auxVector[i].cantidadDeKilos=(*auxCantidad);
+			}
+			if(pedidoVector[i].idCliente!=ultimoIdCliente && pedidoVector[i].isEmpty==0)
+			{
+				ultimoIdCliente=pedidoVector[i].idCliente;
+				contadorCliente=0;
+			}
+			contadorCliente++;
+			if(contadorCliente>contadorMaxCantPedidos)
+			{
+				contadorMaxCantPedidos=contadorCliente;
+				idClienteMax=ultimoIdCliente;
+			}
+
+		}
+		(*idCliente)=idClienteMax;
+
+	}
+	return retorno;
+}
+void listaClienteCon_masKilosPedidos(ePedido pedidoVector[],int size,int* clienteId,
+		eCliente clienteVector[],int sizeCliente,int* posicion,float* cantidadDeKilosMax)
+{
+	busca_clienteConMasKilos( pedidoVector, size, (*clienteId),&cantidadDeKilosMax);
+	cliente_buscarId(clienteVector,sizeCliente, (*clienteId), posicion);
+	listarUnCliente(clienteVector,(*posicion));
 }

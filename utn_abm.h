@@ -56,3 +56,10 @@ int ordenar_porString(eCliente clienteVector[],int size);
 int ordenamiento_insercionEntero (ePedido pedidoVector[], int size);
 int busca_valorMinimo(ePedido pedidoVector[],int size,float* valorBuscado);
 int busca_valorMaximo(ePedido pedidoVector[],int size,float* valorBuscadoMax);
+int busca_cliente(ePedido pedidoVector[],int size,int* clienteId);
+void listaClienteCon_masPedidos(ePedido pedidoVector[],int size,int* clienteId,eCliente clienteVector[],int sizeCliente,int* posicion);
+void listaClienteCon_masPedidosPendientes(ePedido pedidoVector[],int size,int* clienteId,eCliente clienteVector[],int sizeCliente,int* posicion);
+void listaClienteCon_masPedidosCumplidos(ePedido pedidoVector[],int size,int* idCliente,eCliente clienteVector[],int sizeCliente,int* posicion);
+int busca_clienteConMasKilos(ePedido pedidoVector[],int size, int* idCliente, float* auxCantidad);
+void listaClienteCon_masKilosPedidos(ePedido pedidoVector[],int size,int* clienteId,
+		eCliente clienteVector[],int sizeCliente,int* posicion,float* cantidadDeKilosMax);

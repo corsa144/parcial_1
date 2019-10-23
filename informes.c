@@ -60,7 +60,12 @@ int listar_pedidosPorEstado(eCliente clienteVector[],ePedido pedidoVector[], int
 	}
 	return retorno;
 }
-
+/**\brief busca determinados clientes y los muestra
+ * param estructura pedido
+ * param tamaño de estructura pedido
+ * param puntero cliente id
+ * return retorna 0 si esta funcionando bien y -1 en caso de error
+ */
 int busca_cliente(ePedido pedidoVector[],int size,int* clienteId)
 {
 	int retorno=-1;
@@ -146,6 +151,13 @@ void listaClienteCon_masPedidosCumplidos(ePedido pedidoVector[],int size,int* id
 	cliente_buscarId(clienteVector,sizeCliente, (*idCliente), posicion);
 	listarUnCliente(clienteVector,(*posicion));
 }
+/**\brief muestra el cliente que mas reciclo
+ * param estructura pedido
+ * param tamaño de estructura pedido
+ * param puntero al id cliente
+ * param puntero al acumulador de kilos
+ * return retorna 0 si esta funcionando bien y -1 en caso de error
+ */
 int busca_clienteConMasKilos(ePedido pedidoVector[],int size, int* idCliente,
 		float* acumuladorMaxCantKilos)
 {
@@ -198,7 +210,13 @@ void listaClienteCon_masKilosPedidos(ePedido pedidoVector[],int size,int* client
 	cliente_buscarId(clienteVector,sizeCliente, (*clienteId), posicion);
 	listarUnCliente(clienteVector,(*posicion));
 }
-
+/**\brief muestra el cliente que menos reciclo
+ * param estructura pedido
+ * param tamaño de estructura pedido
+ * param puntero al id cliente
+ * param puntero al acumulador de kilos
+ * return retorna 0 si esta funcionando bien y -1 en caso de error
+ */
 int busca_clienteConMenosKilos(ePedido pedidoVector[],int size, int* idCliente,
 		float* acumuladorMinCantKilos)
 {
@@ -253,7 +271,12 @@ void listaClienteCon_menosKilosPedidos(ePedido pedidoVector[],int size,int* clie
 	cliente_buscarId(clienteVector,sizeCliente, (*clienteId), posicion);
 	listarUnCliente(clienteVector,(*posicion));
 }
-
+/**\brief muestra cantidad de clientes que reciclaron mas de un determinado valor
+ * param estructura pedido
+ * param tamaño de estructura pedido
+ * param valor limite
+ * return retorna 0 si esta funcionando bien y -1 en caso de error
+ */
 int cantidad_clientesConMasDeMilKilosReciclados(ePedido pedidoVector[],int size,float limitMax)
 {
 	int retorno=-1;
@@ -300,7 +323,12 @@ int cantidad_clientesConMasDeMilKilosReciclados(ePedido pedidoVector[],int size,
 	}
 	return retorno;
 }
-
+/**\brief muestra la cantidad de clientes que reciclaron menos de un determinado valor
+ * param estructura pedido
+ * param tamaño de estructura pedido
+ * param el valor limite
+ * return retorna 0 si esta funcionando bien y -1 en caso de error
+ */
 int cantidad_clientesConMenosDeCienlKilosReciclados(ePedido pedidoVector[],int size,float limitMin)
 {
 	int retorno=-1;
@@ -349,7 +377,14 @@ int cantidad_clientesConMenosDeCienlKilosReciclados(ePedido pedidoVector[],int s
 	}
 	return retorno;
 }
-
+/**\brief muestra porcentaje reciclado y el cuit que le corresponde
+ * param estructura cliente
+ * param estructura pedido
+ * param tamaño de estructura cliente
+ * param tamaño de estructura pedido
+ * param estado cumplido
+ * return retorna 0 si esta funcionando bien y -1 en caso de error
+ */
 int listar_pedidosPorCompletados(eCliente clienteVector[],ePedido pedidoVector[], int sizeCliente,int sizePedido,int estado)
 {
 	int retorno=-1;
@@ -400,7 +435,14 @@ int listarCuitCliente(eCliente clienteVector[],int posicion)
 	return retorno;
 
 }
-
+/**\brief muestra cantidad de pedidos pendientes por localidad
+ * param estructura cliente
+ * param estructura pedido
+ * param tamaño de estructura cliente
+ * param tamaño de estructura pedido
+ * param estado pendiente
+ * return retorna 0 si esta funcionando bien y -1 en caso de error
+ */
 int listarPorLocalidad(eCliente clienteVector[],int size, ePedido pedidoVector[],int sizePedido,int estado)
 {
 	int retorno = -1;
@@ -442,7 +484,13 @@ int listarPorLocalidad(eCliente clienteVector[],int size, ePedido pedidoVector[]
 	}
 	return retorno;
 }
-
+/**\brief muestra nombre de la empresa y PP reciclado por la misma
+ * param estructura cliente
+ * param estructura pedido
+ * param tamaño de estructura cliente
+ * param tamaño de estructura pedido
+ * return retorna 0 si esta funcionando bien y -1 en caso de error
+ */
 int promedio_ppPorCliente(ePedido pedidoVector[],int size,eCliente clienteVector[],int sizeCliente)
 {
 	int retorno=-1;
@@ -455,10 +503,10 @@ int promedio_ppPorCliente(ePedido pedidoVector[],int size,eCliente clienteVector
 
 	if(pedidoVector != NULL && size>0 )
 	{
-		retorno=0;
 		ordenar_porEntero(pedidoVector,size);
 		for(i=0;i<size;i++)
 		{
+			retorno=0;
 			if(pedidoVector[i].idCliente!=ultimoIdCliente && cantidadDeClientes>0 )
 			{
 
@@ -493,7 +541,14 @@ int promedio_ppPorCliente(ePedido pedidoVector[],int size,eCliente clienteVector
 	}
 	return retorno;
 }
-
+/**\brief busca un cliente con su cuit y mustra la cantidad reciclada requerida
+ * param estructura cliente
+ * param estructura pedido
+ * param tamaño de estructura cliente
+ * param tamaño de estructura pedido
+ * param estado cumplido
+ * return retorna 0 si esta funcionando bien y -1 en caso de error
+ */
 int listarPorCuitYTipo(eCliente clienteVector[],int size, ePedido pedidoVector[],int sizePedido,int estado)
 {
 	int retorno = -1;
@@ -539,12 +594,15 @@ int listarPorCuitYTipo(eCliente clienteVector[],int size, ePedido pedidoVector[]
 						{
 						case 1:
 							cantidadDeKilos+=pedidoVector[j].cantidadPP;
+							retorno=0;
 							break;
 						case 2:
 							cantidadDeKilos+=pedidoVector[j].cantidadHDPE;
+							retorno=0;
 							break;
 						case 3:
 							cantidadDeKilos+=pedidoVector[j].cantidadLDPE;
+							retorno=0;
 							break;
 						default:
 							printf("opcion no valida\n");

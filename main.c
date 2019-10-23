@@ -110,21 +110,21 @@ int main()
             	break;
             case 9:
 
-            	listaClienteCon_masPedidos(pedidoVector,QTY_PEDIDO,&clienteIdAux,clienteVector,QTY_TIPO,&posicionAux);
+            	listaClienteCon_masPedidos(pedidoVector,QTY_PEDIDO,clienteIdAux,clienteVector,QTY_TIPO,posicionAux);
             	break;
             case 10:
-            	listaClienteCon_masPedidosPendientes( pedidoVector,QTY_PEDIDO,&clienteIdAux, clienteVector,QTY_TIPO,& posicionAux);
+            	listaClienteCon_masPedidosPendientes( pedidoVector,QTY_PEDIDO,clienteIdAux, clienteVector,QTY_TIPO,posicionAux);
             	break;
             case 11:
-            	listaClienteCon_masPedidosCumplidos( pedidoVector,QTY_PEDIDO,&clienteIdAux,clienteVector,QTY_TIPO,&posicionAux);
+            	listaClienteCon_masPedidosCumplidos( pedidoVector,QTY_PEDIDO,clienteIdAux,clienteVector,QTY_TIPO,posicionAux);
             	break;
             case 12:
-            	listaClienteCon_masKilosPedidos(pedidoVector,QTY_PEDIDO,&clienteIdAux,clienteVector,
-            			QTY_TIPO,&posicionAux,&cantidadDeKilosAux);
+            	listaClienteCon_masKilosPedidos(pedidoVector,QTY_PEDIDO,clienteIdAux,clienteVector,
+            			QTY_TIPO,posicionAux,cantidadDeKilosAux);
             	break;
             case 13:
-            	listaClienteCon_menosKilosPedidos(pedidoVector,QTY_PEDIDO,&clienteIdAux,clienteVector,
-            			QTY_TIPO,&posicionAux,&cantidadDeKilosAux);
+            	listaClienteCon_menosKilosPedidos(pedidoVector,QTY_PEDIDO,clienteIdAux,clienteVector,
+            			QTY_TIPO,posicionAux,cantidadDeKilosAux);
             	break;
             case 14:
             	cantidad_clientesConMasDeMilKilosReciclados(pedidoVector,QTY_PEDIDO,LIMITE_MAXIMO);
